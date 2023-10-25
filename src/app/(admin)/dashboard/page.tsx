@@ -1,3 +1,4 @@
+import { Button } from "~/app/_components/ui/button";
 import React from "react";
 
 function Dashboard() {
