@@ -38,12 +38,12 @@ const components: { title: string; href: string; description: string }[] = [
 
 export default function SideBarNav() {
   return (
-    <>
+    <div className="flex flex-col">
       {components.map((component, index) => (
         <Link key={index} href={component.href}>
           {component.title}
         </Link>
       ))}
-    </>
+    </div>
   );
 }
