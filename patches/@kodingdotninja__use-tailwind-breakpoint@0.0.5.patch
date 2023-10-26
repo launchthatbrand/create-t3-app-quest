@@ -1,0 +1,64 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 6f42f91de4316d03eceb4aa1cd0c23f601607c66..ab8c35a71cf2afe712a94e8381df4bf9b0089de7 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -1,23 +1,13 @@
+-import {
+-  isBrowser,
+-  isSSR,
+-  useIsomorphicEffect
+-} from "./chunk-AILR37YH.mjs";
+-
++import { isBrowser, isSSR, useIsomorphicEffect } from "./chunk-AILR37YH.mjs";
+ // src/index.ts
+-import {
+-  useEffect,
+-  useMemo,
+-  useRef,
+-  useState
+-} from "react";
++import { useEffect, useMemo, useRef, useState } from "react";
++
+ function create(screens) {
+   function useBreakpoint(breakpoint, defaultValue = false) {
+     const [match, setMatch] = useState(() => defaultValue);
+     const matchRef = useRef(defaultValue);
+     useIsomorphicEffect(() => {
+-      if (!(isBrowser && "matchMedia" in window))
+-        return void 0;
++      if (!(isBrowser && "matchMedia" in window)) return void 0;
+       function track() {
+         var _a;
+         const value = (_a = screens[breakpoint]) != null ? _a : "999999px";
+@@ -28,6 +18,7 @@ function create(screens) {
+         }
+       }
+       window.addEventListener("resize", track);
++      track();
+       return () => window.removeEventListener("resize", track);
+     });
+     return match;
+@@ -39,20 +30,14 @@ function create(screens) {
+   }
+   function useBreakpointValue(breakpoint, valid, invalid) {
+     const match = useBreakpoint(breakpoint);
+-    const value = useMemo(() => match ? valid : invalid, [invalid, match, valid]);
++    const value = useMemo(() => (match ? valid : invalid), [invalid, match, valid]);
+     return value;
+   }
+   return {
+     useBreakpoint,
+     useBreakpointEffect,
+-    useBreakpointValue
++    useBreakpointValue,
+   };
+ }
+ var src_default = create;
+-export {
+-  create,
+-  src_default as default,
+-  isBrowser,
+-  isSSR,
+-  useIsomorphicEffect
+-};
++export { create, src_default as default, isBrowser, isSSR, useIsomorphicEffect };
