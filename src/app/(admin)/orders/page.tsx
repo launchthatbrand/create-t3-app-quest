@@ -22,7 +22,7 @@ async function OrdersPage() {
   return (
     <div className="flex flex-col items-center justify-center p-6">
       Orders Page
-      <div className="flex w-full max-w-4xl flex-1 space-y-2 p-5 shadow-md">
+      <div className="flex w-full max-w-4xl flex-1 flex-col space-y-2 p-5 shadow-md">
         <DataTable columns={columns} data={data} />
       </div>
     </div>
