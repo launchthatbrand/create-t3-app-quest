@@ -14,6 +14,28 @@ async function getData(): Promise<Payment[]> {
       amount: 100,
       status: "pending",
       email: "m@example.com",
+      name: "John Smith",
+    },
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+      name: "John Smith",
+    },
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+      name: "John Smith",
+    },
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+      name: "John Smith",
     },
     // ...
   ];
@@ -44,10 +66,10 @@ function OrdersPage() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
   return (
-    <div className="flex flex-col items-center justify-center p-6">
+    <div className="items-center justify-center text-center">
       Orders Page
       <div>Current view: {isDesktop ? "Desktop" : "Mobile"}</div>
-      <div className="flex  max-w-4xl flex-1 flex-col space-y-2 p-5 shadow-md">
+      <div className="mt-2 flex flex-1 flex-col space-y-2 rounded-md p-2 shadow-md">
         <DataTable columns={columns} data={data} />
       </div>
     </div>

@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 
+import Header from "./_components/Header";
 import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import { headers } from "next/headers";
@@ -22,8 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} flex min-h-screen`}>
-        {/* <Header /> */}
+      <body
+        className={`font-sans ${inter.variable} flex min-h-screen flex-col overflow-hidden`}
+      >
+        <Header />
         <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
       </body>
     </html>

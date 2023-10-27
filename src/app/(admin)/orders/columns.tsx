@@ -11,9 +11,10 @@ import {
 
 import { Button } from "~/app/_components/ui/button";
 import { type ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowRight, ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "~/app/_components/ui/checkbox";
 import { useBreakpoint } from "~/hooks/tailwind";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -22,6 +23,7 @@ export type Payment = {
   amount: number;
   status: "pending" | "processing" | "success" | "failed";
   email: string;
+  name: string;
 };
 
 export function useColumns(): ColumnDef<Payment>[] {
@@ -46,6 +48,29 @@ export function useColumns(): ColumnDef<Payment>[] {
       ),
       enableSorting: false,
       enableHiding: false,
+    },
+    {
+      accessorKey: "id",
+      header: "Order #",
+      cell: ({ row }) => {
+        const id: string = row.getValue("id");
+        const link = `/orders/${id}`;
+
+        return (
+          <div className="text-left font-medium">
+            <Link href={link}>Test</Link>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => {
+        const name: string = row.getValue("name");
+
+        return <div className="text-left">{name}</div>;
+      },
     },
     {
       accessorKey: "status",
@@ -105,7 +130,9 @@ export function useColumns(): ColumnDef<Payment>[] {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button>Open</Button>
+              <Button className="px-2">
+                <ArrowRight />
+              </Button>
             )}
           </div>
         );
