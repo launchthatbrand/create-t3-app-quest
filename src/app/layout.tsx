@@ -26,8 +26,10 @@ export default function RootLayout({
       <body
         className={`font-sans ${inter.variable} flex min-h-screen flex-col overflow-hidden`}
       >
-        <Header />
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+        <TRPCReactProvider headers={headers()}>
+          <Header />
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );

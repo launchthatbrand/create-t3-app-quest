@@ -1,20 +1,25 @@
+"use client";
+
 import Logo from "./Logo";
 import React from "react";
+import Searchbar from "./Searchbar";
 import SideBarNav from "./SideBarNav";
+import UserProfileButton from "./UserProfileButton";
+import { useBreakpoint } from "~/hooks/tailwind";
 import useSidebarStore from "~/store/store";
 
-function Sidebar() {
+function Sidebar({
+  showFixed = false,
+  navBar,
+}: {
+  showFixed: boolean;
+  navBar: any;
+}) {
   const isSidebarActive = useSidebarStore((state) => state.isSidebarActive);
+  const isDesktop = useBreakpoint("md");
+  console.log("show", showFixed);
 
-  return (
-    <div
-      className={`fixed left-0 h-full w-64 transform justify-center overflow-auto bg-gray-200 text-center 
-        ${isSidebarActive ? "translate-x-0" : "-translate-x-full"} 
-        transition-transform duration-300 ease-in-out md:translate-x-0`}
-    >
-      <SideBarNav />
-    </div>
-  );
+  return <div>SIdebar</div>;
 }
 
 export default Sidebar;

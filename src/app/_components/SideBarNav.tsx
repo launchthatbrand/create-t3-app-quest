@@ -14,6 +14,8 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import React from "react";
 import { cn } from "~/lib/utils";
+import { useRouter } from "next/navigation";
+import useSidebarStore from "~/store/store";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -37,12 +39,18 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export default function SideBarNav() {
+  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+  const router = useRouter();
+  function handleClick(href: string) {
+    toggleSidebar();
+    router.push(href);
+  }
   return (
     <div className="flex flex-col">
       {components.map((component, index) => (
-        <Link key={index} href={component.href}>
+        <Button key={index} onClick={() => handleClick(component.href)}>
           {component.title}
-        </Link>
+        </Button>
       ))}
     </div>
   );
