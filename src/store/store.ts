@@ -9,7 +9,7 @@ interface SidebarState {
 }
 
 const useSidebarStore = create<SidebarState>((set) => ({
-  isSidebarActive: true,
+  isSidebarActive: false,
   toggleSidebar: () =>
     set((state) => {
       console.log(

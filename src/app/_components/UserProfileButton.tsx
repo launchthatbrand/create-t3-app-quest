@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export function UserNav() {
+import { Button } from "./ui/button";
+
+function UserProfileButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -55,3 +57,5 @@ export function UserNav() {
     </DropdownMenu>
   );
 }
+
+export default UserProfileButton;

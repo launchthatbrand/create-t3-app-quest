@@ -1,25 +1,42 @@
 "use client";
 
 import Logo from "./Logo";
-import React from "react";
+import React, { type ReactNode } from "react";
 import Searchbar from "./Searchbar";
 import SideBarNav from "./SideBarNav";
 import UserProfileButton from "./UserProfileButton";
 import { useBreakpoint } from "~/hooks/tailwind";
 import useSidebarStore from "~/store/store";
 
-function Sidebar({
-  showFixed = false,
-  navBar,
-}: {
+type Props = {
   showFixed: boolean;
-  navBar: any;
-}) {
+  navBar?: ReactNode;
+};
+
+function Sidebar({ showFixed = false, navBar }: Props) {
   const isSidebarActive = useSidebarStore((state) => state.isSidebarActive);
   const isDesktop = useBreakpoint("md");
   console.log("show", showFixed);
 
-  return <div>SIdebar</div>;
+  return (
+    <aside
+      className={`z-50 transform transition-transform ${
+        showFixed ? "md:block" : "md:hidden"
+      } ${
+        isSidebarActive ? "translate-x-0" : "-translate-x-full"
+      } fixed min-h-full w-64 bg-gray-600 md:static md:translate-x-0`}
+    >
+      {isDesktop ? (
+        ""
+      ) : (
+        <>
+          <Searchbar />
+          <UserProfileButton />
+        </>
+      )}
+      {navBar}
+    </aside>
+  );
 }
 
 export default Sidebar;
