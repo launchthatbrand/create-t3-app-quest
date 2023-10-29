@@ -20,21 +20,22 @@ function Sidebar({ showFixed = false, navBar }: Props) {
 
   return (
     <aside
-      className={`z-50 transform transition-transform ${
+      className={`z-50 transform p-5 transition-transform ${
         showFixed ? "md:block" : "md:hidden"
       } ${
         isSidebarActive ? "translate-x-0" : "-translate-x-full"
       } fixed min-h-full w-64 bg-gray-600 md:static md:translate-x-0`}
     >
       {isDesktop ? (
-        ""
+        <>{navBar}</>
       ) : (
         <>
           <Searchbar />
-          <UserProfileButton />
+
+          {navBar}
+          {/* <UserProfileButton /> */}
         </>
       )}
-      {navBar}
     </aside>
   );
 }

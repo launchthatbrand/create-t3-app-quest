@@ -1,7 +1,16 @@
+import { Input } from "./ui/input";
 import React from "react";
 
 function Searchbar() {
-  return <div className="min-w-[200px] bg-red-600">Searchbar</div>;
+  return (
+    <div>
+      <Input
+        type="search"
+        placeholder="Search..."
+        className="md:w-[100px] lg:w-[300px]"
+      />
+    </div>
+  );
 }
 
 export default Searchbar;

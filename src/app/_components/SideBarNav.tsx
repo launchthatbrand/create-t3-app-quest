@@ -36,6 +36,12 @@ const components: { title: string; href: string; description: string }[] = [
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
   },
+  {
+    title: "MT4 Accounts",
+    href: "/accounts",
+    description:
+      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+  },
 ];
 
 export default function SideBarNav() {

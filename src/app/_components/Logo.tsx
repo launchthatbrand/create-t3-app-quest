@@ -1,7 +1,12 @@
+import Link from "next/link";
 import React from "react";
 
 function Logo() {
-  return <div className="text-lg font-bold">TradeLaunch</div>;
+  return (
+    <Link className="mr-auto text-lg font-bold" href="/">
+      TradeLaunch
+    </Link>
+  );
 }
 
 export default Logo;
