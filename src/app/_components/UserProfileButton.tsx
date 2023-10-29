@@ -11,50 +11,53 @@ import {
 } from "./ui/dropdown-menu";
 
 import { Button } from "./ui/button";
+import { type Session } from "next-auth";
+import { signIn, signOut } from "next-auth/react";
+import UserAvatar from "./UserAvatar";
+import { Loader2, StarIcon } from "lucide-react";
 
-function UserProfileButton() {
+function UserProfileButton({ session }: { session: Session | null }) {
+  if (!session)
+    return (
+      <Button variant={"outline"} onClick={() => signIn()}>
+        Sign In
+      </Button>
+    );
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">shadcn</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              m@example.com
-            </p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+    session && (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <UserAvatar name={session.user?.name} image={session.user?.image} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>{session.user?.name}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+
+          {/* {subscription === undefined && (
+            <DropdownMenuItem>
+              <Loader2 className="mr-2 h-4 w-full animate-spin items-center" />
+            </DropdownMenuItem>
+          )}
+
+          {subscription?.role === "pro" && (
+            <>
+              <DropdownMenuLabel className="flex animate-pulse items-center justify-center space-x-1 text-xs text-[#e035c1]">
+                <StarIcon fill="#E935c1" />
+                <p>PRO</p>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <ManageAccountButton />
+              </DropdownMenuItem>
+            </>
+          )} */}
+          <DropdownMenuItem onClick={() => signOut()}>
+            Sign Out
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>New Team</DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
   );
 }
 

@@ -8,9 +8,12 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import UserProfileButton from "./UserProfileButton";
 import { useBreakpoint } from "~/hooks/tailwind";
+import { useSession } from "next-auth/react";
 import useSidebarStore from "~/store/store";
 
 function Header() {
+  const { data: session, status } = useSession();
+  console.log("headersession", session);
   const isDesktop = useBreakpoint("md");
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
   return (
@@ -20,11 +23,11 @@ function Header() {
         {isDesktop ? (
           <>
             <Searchbar />
-            <UserProfileButton />
+            <UserProfileButton session={session} />
           </>
         ) : (
           <>
-            <UserProfileButton />
+            <UserProfileButton session={session} />
             <Button className="md:hidden" onClick={toggleSidebar}>
               <MenuIcon />
             </Button>
