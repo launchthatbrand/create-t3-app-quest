@@ -27,6 +27,10 @@ export const postRouter = createTRPCRouter({
         createdById: ctx.session.user.id,
       });
     }),
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    const rows = await ctx.db.query.posts.findMany(); // Adjust this line to match your actual query
+    return rows; // The uuid field will now be a string UUID, not a binary UUID
+  }),
 
   getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.posts.findFirst({

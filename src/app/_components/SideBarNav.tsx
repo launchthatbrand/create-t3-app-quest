@@ -20,25 +20,31 @@ import useSidebarStore from "~/store/store";
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Dashboard",
-    href: "/dashboard",
+    href: "/admin/dashboard",
     description:
       "A modal dialog that interrupts the user with important content and expects a response.",
   },
   {
     title: "Members",
-    href: "/members",
+    href: "/admin/members",
     description:
       "For sighted users to preview content available behind a link.",
   },
   {
     title: "Orders",
-    href: "/orders",
+    href: "/admin/orders",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
   },
   {
     title: "MT4 Accounts",
-    href: "/accounts",
+    href: "/admin/accounts",
+    description:
+      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+  },
+  {
+    title: "Posts",
+    href: "/admin/posts",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
   },
