@@ -1,6 +1,8 @@
-import { relations, sql } from "drizzle-orm";
+import { fromBinaryUUID } from "binary-uuid";
+import { type SQL, relations, sql } from "drizzle-orm";
 import {
   bigint,
+  customType,
   index,
   int,
   mysqlTableCreator,
@@ -17,12 +19,38 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
+
+export const binary = customType<{
+  data: string;
+  driverData: string;
+  config: { length?: number };
+}>({
+  dataType(config) {
+    return typeof config?.length !== "undefined"
+      ? `binary(${config.length})`
+      : `binary`;
+  },
+  fromDriver(value: string): string {
+    const buff = value.startsWith("base64:type254:")
+      ? Buffer.from(value.split(":")[2] ?? "", "base64")
+      : Buffer.from(value, "binary");
+
+    return fromBinaryUUID(buff);
+  },
+  toDriver(value: string): SQL<unknown> {
+    return sql`UUID_TO_BIN(${value}, 1)`;
+  },
+});
+
 export const mysqlTable = mysqlTableCreator((name) => `create-t3-app_${name}`);
 
 export const posts = mysqlTable(
   "post",
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    uuid: binary("uuid", { length: 16 })
+      .default(sql`(UUID_TO_BIN(UUID()))`)
+      .unique(),
     name: varchar("name", { length: 256 }),
     createdById: varchar("createdById", { length: 255 }).notNull(),
     createdAt: timestamp("created_at")
@@ -33,7 +61,7 @@ export const posts = mysqlTable(
   (example) => ({
     createdByIdIdx: index("createdById_idx").on(example.createdById),
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );
 
 export const users = mysqlTable("user", {
@@ -71,7 +99,7 @@ export const accounts = mysqlTable(
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
     userIdIdx: index("userId_idx").on(account.userId),
-  })
+  }),
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -89,7 +117,7 @@ export const sessions = mysqlTable(
   },
   (session) => ({
     userIdIdx: index("userId_idx").on(session.userId),
-  })
+  }),
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -105,5 +133,5 @@ export const verificationTokens = mysqlTable(
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
-  })
+  }),
 );
