@@ -1,9 +1,13 @@
 import { Input } from "./ui/input";
 import React from "react";
 
-function Searchbar() {
+type Props = {
+  className?: string;
+};
+
+function Searchbar({ className }: Props) {
   return (
-    <div>
+    <div className={className}>
       <Input
         type="search"
         placeholder="Search..."

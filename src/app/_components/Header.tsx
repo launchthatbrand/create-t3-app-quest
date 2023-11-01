@@ -20,19 +20,13 @@ function Header() {
     <header className="sticky top-0 z-50 flex min-h-[80px] min-w-0 items-center space-x-3 overflow-auto bg-slate-400 p-5 dark:bg-gray-900">
       <div className="flex flex-1 items-center justify-between space-x-3">
         <Logo />
-        {isDesktop ? (
-          <>
-            <Searchbar />
-            <UserProfileButton session={session} />
-          </>
-        ) : (
-          <>
-            <UserProfileButton session={session} />
-            <Button className="md:hidden" onClick={toggleSidebar}>
-              <MenuIcon />
-            </Button>
-          </>
-        )}
+
+        <Searchbar />
+        <UserProfileButton session={session} />
+
+        <Button className="md:hidden" onClick={toggleSidebar}>
+          <MenuIcon />
+        </Button>
       </div>
     </header>
   );
