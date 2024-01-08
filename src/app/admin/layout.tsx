@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <div className="flex flex-1">
       <Sidebar showFixed={true} navBar={<SideBarNav />} />
-      <div className="flex-1 p-3">{children}</div>
+      <div className="flex-1 overflow-auto p-3">{children}</div>
     </div>
   );
 }

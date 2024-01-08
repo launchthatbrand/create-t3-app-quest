@@ -18,11 +18,11 @@ function MembersPage() {
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;
   return (
-    <div className="items-center justify-center text-center">
-      Members Page
-      {pathname}
+    <div className="container flex w-full flex-col items-center text-center">
+      <span>Posts Page</span>
+      <span>{pathname}</span>
       <div>Current view: {isDesktop ? "Desktop" : "Mobile"}</div>
-      <div className="mt-2 flex flex-1 flex-col space-y-2 rounded-md p-2 shadow-md">
+      <div className="mt-2 w-full flex-1 flex-col space-y-2 rounded-md p-2 shadow-md">
         <DataTable columns={columns} data={posts} />
       </div>
     </div>

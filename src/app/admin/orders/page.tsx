@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 
 import { type Payment, useColumns } from "./columns";
 import { useBreakpoint } from "~/hooks/tailwind";
+import { usePathname } from "next/navigation";
+import { api } from "~/trpc/react";
 
 async function getData(): Promise<Payment[]> {
   // Fetch data from your API here.
@@ -42,35 +44,21 @@ async function getData(): Promise<Payment[]> {
 }
 
 function OrdersPage() {
-  const [data, setData] = useState<Payment[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<unknown>(null);
+  const pathname = usePathname();
   const isDesktop = useBreakpoint("md");
   const columns = useColumns();
+  const { data: posts, isLoading, isError } = api.post.getAll.useQuery();
+  console.log("posts", posts);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const result = await getData();
-        setData(result);
-        setLoading(false);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    }
-
-    fetchData().catch(console.error);
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error</p>;
   return (
-    <div className="items-center justify-center text-center">
-      Orders Page
+    <div className="container flex w-full flex-col items-center text-center">
+      <span>Orders Page</span>
+      <span>{pathname}</span>
       <div>Current view: {isDesktop ? "Desktop" : "Mobile"}</div>
-      <div className="mt-2 flex flex-1 flex-col space-y-2 rounded-md p-2 shadow-md">
-        <DataTable columns={columns} data={data} />
+      <div className="mt-2 w-full flex-1 flex-col space-y-2 rounded-md p-2 shadow-md">
+        <DataTable columns={columns} data={posts} />
       </div>
     </div>
   );
