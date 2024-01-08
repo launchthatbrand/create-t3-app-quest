@@ -15,8 +15,10 @@ import { type Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import UserAvatar from "./UserAvatar";
 import { Loader2, StarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 function UserProfileButton({ session }: { session: Session | null }) {
+  const router = useRouter();
   if (!session)
     return (
       <Button variant={"outline"} onClick={() => signIn()}>
@@ -52,6 +54,9 @@ function UserProfileButton({ session }: { session: Session | null }) {
               </DropdownMenuItem>
             </>
           )} */}
+          <DropdownMenuItem onClick={() => router.push("/admin/dashboard")}>
+            Dashboard
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => signOut()}>
             Sign Out
           </DropdownMenuItem>
