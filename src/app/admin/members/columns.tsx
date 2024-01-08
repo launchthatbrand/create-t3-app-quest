@@ -46,11 +46,41 @@ export function useColumns(): ColumnDef<User>[] {
       ),
       cell: ({ row }) => (
         <Checkbox
+          className="mb-12 md:mb-0"
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
         />
       ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      id: "mobile",
+      header: "Users Info",
+      cell: ({ row }) => {
+        const id: string = row.getValue("id");
+        const name: string = row.getValue("name");
+        const email: string = row.getValue("email");
+        return (
+          <>
+            <div className="flex flex-col space-y-1">
+              <span className="text-left text-xs">
+                <strong>ID:</strong> {id}
+              </span>
+              <span className="text-left">
+                <strong>Name:</strong> {name}
+              </span>
+              <span className="text-left">
+                <strong>Email:</strong> {email}
+              </span>
+              <Button className="self-end px-2 text-xs leading-3">
+                <ArrowRight />
+              </Button>
+            </div>
+          </>
+        );
+      },
       enableSorting: false,
       enableHiding: false,
     },

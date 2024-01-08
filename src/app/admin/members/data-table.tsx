@@ -30,8 +30,9 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "~/app/_components/ui/button";
-import React from "react";
+import React, { useEffect } from "react";
 import { Input } from "~/app/_components/ui/input";
+import { useBreakpoint } from "~/hooks/tailwind";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,16 +43,34 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const isDesktop = useBreakpoint("md");
+  console.log(isDesktop);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
 
+  // COLUMN VISIBILITY
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
       select: false,
+      mobile: false,
       email: true,
     });
+
+  useEffect(() => {
+    // Update column visibility based on mobile status
+    setColumnVisibility({
+      select: isDesktop ? false : true,
+      mobile: isDesktop ? false : true,
+      id: isDesktop ? true : false,
+      name: isDesktop ? true : false,
+      email: isDesktop ? true : false,
+      actions: isDesktop ? true : false,
+      // Add other columns as needed
+    });
+  }, [isDesktop]);
+
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
     data,
