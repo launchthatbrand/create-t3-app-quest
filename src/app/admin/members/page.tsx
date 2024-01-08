@@ -3,55 +3,55 @@
 import { DataTable } from "./data-table";
 import React, { useEffect, useState } from "react";
 
-import { type Payment, useColumns } from "./columns";
+import { type User, useColumns } from "./columns";
 import { useBreakpoint } from "~/hooks/tailwind";
 import { usePathname } from "next/navigation";
 import { api } from "~/trpc/react";
 
-async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    // ...
-  ];
-}
+// async function getData(): Promise<User[]> {
+//   // Fetch data from your API here.
+//   return [
+//     {
+//       id: "728ed52f",
+//       amount: 100,
+//       status: "pending",
+//       email: "m@example.com",
+//       name: "John Smith",
+//     },
+//     {
+//       id: "728ed52f",
+//       amount: 100,
+//       status: "pending",
+//       email: "m@example.com",
+//       name: "John Smith",
+//     },
+//     {
+//       id: "728ed52f",
+//       amount: 100,
+//       status: "pending",
+//       email: "m@example.com",
+//       name: "John Smith",
+//     },
+//     {
+//       id: "728ed52f",
+//       amount: 100,
+//       status: "pending",
+//       email: "m@example.com",
+//       name: "John Smith",
+//     },
+//     // ...
+//   ];
+// }
 
 function MembersPage() {
   const pathname = usePathname();
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
   const isDesktop = useBreakpoint("md");
   const columns = useColumns();
-  const { data: posts, isLoading, isError } = api.post.getAll.useQuery();
-  console.log("posts", posts);
+  const { data: users, isLoading, isError } = api.user.getAll.useQuery();
+  console.log("users", users);
 
   /* useEffect(() => {
     async function fetchData() {
@@ -76,7 +76,7 @@ function MembersPage() {
       {pathname}
       <div>Current view: {isDesktop ? "Desktop" : "Mobile"}</div>
       <div className="mt-2 flex flex-1 flex-col space-y-2 rounded-md p-2 shadow-md">
-        <DataTable columns={columns} data={posts} />
+        <DataTable columns={columns} data={users} />
       </div>
     </div>
   );

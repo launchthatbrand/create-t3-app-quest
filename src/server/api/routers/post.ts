@@ -1,11 +1,11 @@
-import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+
 import { posts } from "~/server/db/schema";
+import { z } from "zod";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -28,8 +28,8 @@ export const postRouter = createTRPCRouter({
       });
     }),
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const rows = await ctx.db.query.posts.findMany(); // Adjust this line to match your actual query
-    return rows; // The uuid field will now be a string UUID, not a binary UUID
+    const posts = await ctx.db.query.posts.findMany(); // Adjust this line to match your actual query
+    return posts; // The uuid field will now be a string UUID, not a binary UUID
   }),
 
   getLatest: publicProcedure.query(({ ctx }) => {

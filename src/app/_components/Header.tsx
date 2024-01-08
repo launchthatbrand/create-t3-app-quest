@@ -21,7 +21,7 @@ function Header() {
       <div className="flex flex-1 items-center justify-between space-x-3">
         <Logo />
 
-        <Searchbar />
+        <Searchbar className="hidden md:block" />
         <UserProfileButton session={session} />
 
         <Button className="md:hidden" onClick={toggleSidebar}>

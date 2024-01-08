@@ -16,18 +16,21 @@ import { Checkbox } from "~/app/_components/ui/checkbox";
 import { useBreakpoint } from "~/hooks/tailwind";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { type RouterOutputs } from "~/trpc/shared";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-  name: string;
-};
+// export type Payment = {
+//   id: string;
+//   amount: number;
+//   status: "pending" | "processing" | "success" | "failed";
+//   email: string;
+//   name: string;
+// };
 
-export function useColumns(): ColumnDef<Payment>[] {
+export type User = RouterOutputs["user"]["getAll"][number];
+
+export function useColumns(): ColumnDef<User>[] {
   const isDesktop = useBreakpoint("md");
   const pathname = usePathname();
 
@@ -53,14 +56,14 @@ export function useColumns(): ColumnDef<Payment>[] {
     },
     {
       accessorKey: "id",
-      header: "Order #",
+      header: "User ID",
       cell: ({ row }) => {
         const id: string = row.getValue("id");
         const link = `${pathname}/${id}`;
 
         return (
           <div className="text-left font-medium">
-            <Link href={link}>Test</Link>
+            <Link href={link}>{id}</Link>
           </div>
         );
       },
@@ -75,15 +78,12 @@ export function useColumns(): ColumnDef<Payment>[] {
       },
     },
     {
-      accessorKey: "status",
-      header: "Status",
-    },
-    {
       accessorKey: "email",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
+            className="p-0 text-left"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Email
@@ -91,18 +91,10 @@ export function useColumns(): ColumnDef<Payment>[] {
           </Button>
         );
       },
-    },
-    {
-      accessorKey: "amount",
-      header: () => <div className="text-right">Amount</div>,
       cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("amount"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
+        const email: string = row.getValue("email");
 
-        return <div className="text-right font-medium">{formatted}</div>;
+        return <div className="text-left">{email}</div>;
       },
     },
     {

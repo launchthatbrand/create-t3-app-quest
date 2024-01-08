@@ -1,72 +1,19 @@
 /* eslint-disable @typescript-eslint/require-await */
 "use client";
+
 import { DataTable } from "./data-table";
-import React, { useEffect, useState } from "react";
-
-import { type Payment, useColumns } from "./columns";
-import { useBreakpoint } from "~/hooks/tailwind";
-import { usePathname } from "next/navigation";
+import React from "react";
 import { api } from "~/trpc/react";
-
-async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-      name: "John Smith",
-    },
-    // ...
-  ];
-}
+import { useBreakpoint } from "~/hooks/tailwind";
+import { useColumns } from "./columns";
+import { usePathname } from "next/navigation";
 
 function MembersPage() {
   const pathname = usePathname();
-  const [data, setData] = useState<Payment[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<unknown>(null);
   const isDesktop = useBreakpoint("md");
   const columns = useColumns();
   const { data: posts, isLoading, isError } = api.post.getAll.useQuery();
   console.log("posts", posts);
-
-  /* useEffect(() => {
-    async function fetchData() {
-      try {
-        const result = await getData();
-        setData(result);
-        setLoading(false);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    }
-
-    fetchData().catch(console.error);
-  }, []); */
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;

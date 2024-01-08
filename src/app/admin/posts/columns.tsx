@@ -28,7 +28,7 @@ import { type RouterOutputs } from "~/trpc/shared";
   name: string;
 }; */
 
-type Post = RouterOutputs["post"]["getAll"][number];
+export type Post = RouterOutputs["post"]["getAll"][number];
 
 export function useColumns(): ColumnDef<Post>[] {
   const isDesktop = useBreakpoint("md");
@@ -56,7 +56,7 @@ export function useColumns(): ColumnDef<Post>[] {
     },
     {
       accessorKey: "uuid",
-      header: "Post #",
+      header: "Post UUID",
       cell: ({ row }) => {
         const id: string = row.getValue("uuid");
         const link = `${pathname}/${id}`;
@@ -131,7 +131,11 @@ export function useColumns(): ColumnDef<Post>[] {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
                   <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(payment.id)}
+                    onClick={() =>
+                      navigator.clipboard.writeText(
+                        payment.uuid?.toString() ?? "",
+                      )
+                    }
                   >
                     Copy payment ID
                   </DropdownMenuItem>
